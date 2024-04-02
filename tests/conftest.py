@@ -1,7 +1,7 @@
 import pytest
-import requests
 
 from data import Data
+from helpers import CourierDeletionHelper
 
 
 @pytest.fixture()
@@ -15,14 +15,10 @@ def get_the_courier_data():
 
 
 @pytest.fixture()
-def obtaining_courier_record_data_and_its_further_deletion(get_the_courier_data):
+def get_courier_data_and_delete_courier(get_the_courier_data):
     courier_data = get_the_courier_data
     yield courier_data
-
-    response = requests.post(f'{Data.url}{Data.login_courier}',
-                             data={"login": courier_data.get("login"), "password": courier_data.get("password")})
-    id_courier = response.json().get("id")
-    requests.delete(f'{Data.url}{Data.delete_courier}{id_courier}')
+    CourierDeletionHelper.courier_deletion_requests(courier_data)
 
 
 @pytest.fixture()

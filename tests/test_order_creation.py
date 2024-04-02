@@ -12,5 +12,5 @@ class TestOrderCreation:
     @pytest.mark.parametrize("scooter_color", Data.get_random_scooter_color())
     def test_creating_an_order_with_a_choice_of_any_color(self, get_the_order_data, scooter_color):
         data = get_the_order_data["color"] = scooter_color
-        response = OrderCreationHelper.requests_func(data)
+        response = OrderCreationHelper.order_creation_request(data)
         AssertHelper.assert_func(response, 201, Data.status_code.get(201)[1])
